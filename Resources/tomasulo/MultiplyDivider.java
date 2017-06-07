@@ -1,13 +1,13 @@
 package tomasulo;
 
-public class MultiplyDivider extends Resource {
+public class MultiplyDivider  {
 
 	public MultiplyDivider(int processCyclesMul, int processCyclesDiv) {
-		super(999999);
+		//super(999999);
 		this.processCyclesMul = processCyclesMul;
 		this.processCyclesDiv = processCyclesDiv;
 	}
-
+	/*
 	@Override
 	protected double computeResult(Query query) {
 		ComputeQuery cquery = (ComputeQuery)query;
@@ -35,6 +35,6 @@ public class MultiplyDivider extends Resource {
 		
 		return ret;
 	}
-
+*/
 	private int processCyclesMul, processCyclesDiv;
 }

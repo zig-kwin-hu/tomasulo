@@ -17,45 +17,68 @@ public class MultiplyDivideComponent extends ComputeComponent {
 
 	@Override
 	protected Query createQuery(Reservation reservation) {
-		return new ComputeQuery(reservation.srcData1.value, reservation.srcData2.value, reservation.instruction.type == Instruction.Type.DIVD);
+		return new ComputeQuery(reservation.destData.reference, reservation.srcData1.value, reservation.srcData2.value, reservation.instruction.type == Instruction.Type.DIVD);
 	}
 
 	@Override
 	public ArrayList<TupleDataIns> countinueExecute()
 	{
-		if ((!resource.occupied || resource.owner!=this) && (!divideResource.occupied || divideResource.owner!=this))
+		if ((!resource.isOccupied() || resource.owner!=this) && (!divideResource.isOccupied() || divideResource.owner!=this))
 		{
 			return null;
 		}
-		if(resource.occupied) {
-			resource.execute();
-		}
-		if (!resource.occupied)
-		{
-			this.runningReservation.destData.value = resource.getResult();
-			this.runningReservation.occupied = false;
+		ArrayList<TupleDataIns> a = new ArrayList<TupleDataIns>();
+		if(resource.isOccupied() && resource.owner == this) {
+			PhaseData result = resource.execute();
+			if (result != null)
+			{
+				Reservation running = null;
+				for (Reservation r : this.reservations){
+					running = r;
+					if (running.destData.reference == result.reservationid){
+						break;
+					}
+				}
 
-			Logger.Info("Instruction " + this.runningReservation.instruction + " finished, return value = " + this.runningReservation.destData.value);
-			ArrayList<TupleDataIns> a = new ArrayList<TupleDataIns>();
-			a.add(new TupleDataIns(this.runningReservation.destData, this.runningReservation.instruction));
+				if (running.destData.reference != result.reservationid){
+					Logger.Fatal("result's reservation not found" + result);
+				}
+
+				running.destData.value = result.result;
+				running.occupied = false;
+				running.running = false;
+
+				Logger.Info("Instruction " + running.instruction + " finished, return value = " + running.destData.value);
+				a.add(new TupleDataIns(running.destData, running.instruction));
+			}
+		}
+		if(this.divideResource.isOccupied() && this.divideResource.owner == this) {
+			PhaseData result = this.divideResource.execute();
+			if (result != null)
+			{
+				Reservation running = null;
+				for (Reservation r : this.reservations){
+					running = r;
+					if (running.destData.reference == result.reservationid){
+						break;
+					}
+				}
+
+				if (running.destData.reference != result.reservationid){
+					Logger.Fatal("result's reservation not found" + result);
+				}
+
+				running.destData.value = result.result;
+				running.occupied = false;
+				running.running = false;
+
+				Logger.Info("Instruction " + running.instruction + " finished, return value = " + running.destData.value);
+				a.add(new TupleDataIns(running.destData, running.instruction));
+			}
+		}
+		if (a.size() > 0){
 			return a;
 		}
-
-		if(divideResource.occupied){
-			divideResource.execute();
-		}
-
-		if (!resource.occupied)
-		{
-			this.runningReservation.destData.value = resource.getResult();
-			this.runningReservation.occupied = false;
-
-			Logger.Info("Instruction " + this.runningReservation.instruction + " finished, return value = " + this.runningReservation.destData.value);
-			ArrayList<TupleDataIns> a = new ArrayList<TupleDataIns>();
-			a.add(new TupleDataIns(this.runningReservation.destData, this.runningReservation.instruction));
-			return a;
-		}
-
 		return null;
 	}
 
@@ -63,11 +86,18 @@ public class MultiplyDivideComponent extends ComputeComponent {
 	public void tryExecute(Reservation reservation) {
 		if (reservation.isReady())//正在执行的也要？
 		{
-			Query query = this.createQuery(reservation);
+			ComputeQuery query = (ComputeQuery) this.createQuery(reservation);
 			query.source = this;
-			if(this.resource.tryQuery(query)) {
-				this.runningReservation = reservation;//不应该是tryquery成功后才更该吗？
+			if(query.isDiv){
+				if(this.divideResource.tryQuery(query)) {
+					reservation.running = true;//不应该是tryquery成功后才更该吗？
+				}
+			}else{
+				if(this.resource.tryQuery(query)) {
+					reservation.running = true;//不应该是tryquery成功后才更该吗？
+				}
 			}
+
 		}
 	}
 

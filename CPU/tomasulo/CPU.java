@@ -8,10 +8,16 @@ public class CPU {
 	public CPU()
 	{
 		// Resources
-		Adder adder = new Adder(2);
-		MultiplyDivider divider1 = new MultiplyDivider(10, 40);
-		MultiplyDivider divider2 = new MultiplyDivider(10, 40);
-		this.memory = new Memory(2, 4096);
+		int[] addPhaseCycles = {1,1};
+		Adder adder = new Adder(2,addPhaseCycles);
+		//MultiplyDivider divider1 = new MultiplyDivider(10, 40);
+		//MultiplyDivider divider2 = new MultiplyDivider(10, 40);
+		int[] multiPhaseCycles = {1,1,2,2,2,2};
+		Multipier multipier = new Multipier(6,multiPhaseCycles);
+		int[] divPhaseCycles = {4,4,8,8,8,8};
+		Divider divider = new Divider(6,divPhaseCycles);
+		int[] memPhaseCycles = {2};
+		this.memory = new Memory(1, memPhaseCycles, 4096);
 		
 		// Reg
 		this.regFile = new RegFile(16);
@@ -21,8 +27,8 @@ public class CPU {
 		this.components.add(new LoadComponent(3, this.regFile, memory));
 		this.components.add(new StoreComponent(3, this.regFile, memory));
 		this.components.add(new AddSubtractComponent(3, regFile, adder));
-		this.components.add(new MultiplyDivideComponent(2, regFile, divider1));
-		this.components.add(new MultiplyDivideComponent(2, regFile, divider2));
+		this.components.add(new MultiplyDivideComponent(2, regFile, multipier,divider));
+		//this.components.add(new MultiplyDivideComponent(2, regFile, divider2));
 		
 		// OpQueue
 		this.opQueue = new OpQuene(components);

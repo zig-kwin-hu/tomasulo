@@ -4,7 +4,7 @@ public class Reservation {
 	public Reservation()
 	{
 		this.occupied = false;
-		
+		this.running = false;
 		this.destData = Data.dest(0);
 		this.srcData1 = Data.normal(0);
 		this.srcData2 = Data.normal(0);
@@ -35,5 +35,6 @@ public class Reservation {
 	public Instruction instruction;
 	public Data destData, srcData1, srcData2;
 	public Boolean occupied;
+	public Boolean running;
 	public int address;
 }

@@ -1,9 +1,10 @@
 package tomasulo;
 
-// TODO ´¦Àí¸¡µãÊý
+// TODO ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 public abstract class Query {
 	
 	protected Query() {}
 	
 	public Component source;
+	public int reservationid;
 }

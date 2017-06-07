@@ -9,7 +9,7 @@ public class LoadComponent extends Component {
 
 	@Override
 	protected Query createQuery(Reservation reservation) {
-		return new LoadQuery(reservation.address);
+		return new LoadQuery(reservation.destData.reference, reservation.address);
 	}
 
 	@Override
@@ -19,7 +19,7 @@ public class LoadComponent extends Component {
 		reservation.srcData1 = Data.normal(0);
 		reservation.srcData2 = Data.normal(0);
 		
-		this.regFile.data[reservation.instruction.dest].waitFor(reservation.destData);
+		this.regFile.data[reservation.instruction.reg].waitFor(reservation.destData);
 	}
 
 	@Override

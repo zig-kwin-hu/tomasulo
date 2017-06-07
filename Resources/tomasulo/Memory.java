@@ -4,8 +4,8 @@ public class Memory extends Resource{
 
 	public double[] data;
 	
-	public Memory(int processCycles, int size) {
-		super(processCycles);
+	public Memory(int phasenum, int[] phasecycles, int size) {
+		super(phasenum,phasecycles);
 		this.data = new double[size];
 	}
 	

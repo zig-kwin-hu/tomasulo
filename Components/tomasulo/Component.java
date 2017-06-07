@@ -52,21 +52,34 @@ public abstract class Component {
 	
 	public ArrayList<TupleDataIns> countinueExecute()
 	{	
-		if (!resource.occupied || resource.owner!=this)
+		if (!resource.isOccupied() || resource.owner!=this)
 		{
 			return null;
 		}
 			
-		resource.execute();
+		PhaseData result = resource.execute();
 		
-		if (!resource.occupied)
+		if (result != null)
 		{
-			this.runningReservation.destData.value = resource.getResult();
-			this.runningReservation.occupied = false;
+			Reservation running = null;
+			for (Reservation r : this.reservations){
+				running = r;
+				if (running.destData.reference == result.reservationid){
+					break;
+				}
+			}
+
+			if (running.destData.reference != result.reservationid || !running.running){
+				Logger.Fatal("result's reservation not found" + result);
+			}
+
+			running.destData.value = result.result;
+			running.occupied = false;
+			running.running = false;
 			
-			Logger.Info("Instruction " + this.runningReservation.instruction + " finished, return value = " + this.runningReservation.destData.value);
+			Logger.Info("Instruction " + running.instruction + " finished, return value = " + running.destData.value);
 			ArrayList<TupleDataIns> a = new ArrayList<TupleDataIns>();
-			a.add(new TupleDataIns(this.runningReservation.destData, this.runningReservation.instruction));
+			a.add(new TupleDataIns(running.destData, running.instruction));
 			return a;
 		}
 		
@@ -85,7 +98,9 @@ public abstract class Component {
 
 	public void executeOnTick(){
 		for (Reservation reservation : this.reservations){
-			this.tryExecute(reservation);
+			if (!reservation.running) {
+				this.tryExecute(reservation);
+			}
 		}
 	}
 	public ArrayList<Reservation> getReservations(){
@@ -98,7 +113,8 @@ public abstract class Component {
 			Query query = this.createQuery(reservation);
 			query.source = this;
 			if(this.resource.tryQuery(query)) {
-				this.runningReservation = reservation;//不应该是tryquery成功后才更该吗？
+				reservation.running = true;
+				//this.runningReservation = reservation;//不应该是tryquery成功后才更该吗？
 			}
 		}		
 	}

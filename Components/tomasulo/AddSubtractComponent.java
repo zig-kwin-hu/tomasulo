@@ -16,16 +16,16 @@ public class AddSubtractComponent extends ComputeComponent {
 	protected Query createQuery(Reservation reservation) {
 		if (reservation.instruction.type == Instruction.Type.ADDD)
 		{
-			return new ComputeQuery(reservation.srcData1.value, reservation.srcData2.value);
+			return new ComputeQuery(reservation.destData.reference, reservation.srcData1.value, reservation.srcData2.value);
 		}
 		else if (reservation.instruction.type == Instruction.Type.SUBD)
 		{
-			return new ComputeQuery(reservation.srcData1.value, -reservation.srcData2.value);
+			return new ComputeQuery(reservation.destData.reference, reservation.srcData1.value, -reservation.srcData2.value);
 		}
 		else
 		{
 			Logger.Fatal("AddSbutractComponent: Unsupported operation " + reservation.instruction.type);
-			return new ComputeQuery(0, 0);
+			return new ComputeQuery(0, 0, 0);
 		}
 	}
 
