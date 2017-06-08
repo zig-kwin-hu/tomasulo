@@ -24,11 +24,10 @@ public class CPU {
 		
 		// Component
 		this.components = new ArrayList<Component>();
-		//this.components.add(new LoadComponent(3, this.regFile, memory));
-		//this.components.add(new StoreComponent(3, this.regFile, memory));
-		this.components.add(new MemComponent(3,this.regFile,memory));
+
 		this.components.add(new AddSubtractComponent(3, regFile, adder));
 		this.components.add(new MultiplyDivideComponent(2, regFile, multipier,divider));
+		this.components.add(new MemComponent(3,this.regFile,memory));
 		//this.components.add(new MultiplyDivideComponent(2, regFile, divider2));
 		
 		// OpQueue
@@ -154,6 +153,15 @@ public class CPU {
 	public void setReg(int index, double value)
 	{
 		this.regFile.data[index].value = value;
+	}
+	
+	public ArrayList<Reservation> getReservations(){
+		ArrayList<Reservation> reservations = new ArrayList<Reservation>();
+		for (Component component : this.components)
+		{
+			reservations.addAll(component.getReservations());
+		}
+		return reservations;
 	}
 	
 	public static void main(String args[])

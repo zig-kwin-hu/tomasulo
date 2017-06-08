@@ -36,11 +36,11 @@ public class Instruction {
 	{
 		if (type==Type.LD || type==Type.ST)
 		{
-			return "Instruction { id=" + id + " type=" + type +" reg=F" + reg + " addr=" + addr + "}";
+			return "id=" + id + " type=" + type +" reg=F" + reg + " addr=" + addr;
 		}
 		else
 		{
-			return "Instruction { id=" + id + " type=" + type +" dest=F" + dest + " src1=F" + src1 + " src2=F" + src2 + "}";
+			return "id=" + id + " type=" + type +" dest=F" + dest + " src1=F" + src1 + " src2=F" + src2;
 		}
 	}
 	
@@ -48,6 +48,6 @@ public class Instruction {
 	public int dest, src1, src2;
 	public int reg, addr;
 	//new change Huzikun
-	static private int count = 0;
+	static int count = 0;
 	public int id;
 }
