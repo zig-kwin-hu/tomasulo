@@ -4,55 +4,69 @@
  */
 package tomasulo;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.*;
+import java.lang.reflect.Executable;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.*;
 
-/**
- *
- * @author 1
- */
+class MemoryInputTable implements ActionListener{
+    MainUI father;
+    JTextField input1;
+    JTextField input2;
+    private JFrame fill;
 
-class MyTable extends JTable
-{
-    MyTable() {
-        super();
+    public MemoryInputTable(MainUI m) {
+        father = m;
+
+        fill = new JFrame();
+        fill.setTitle("Name and Pass");
+
+        JPanel p_up = new JPanel();
+        p_up.setLayout(new GridLayout(2, 2));
+
+        JLabel label1 = new JLabel("Address");
+        p_up.add(label1);
+        input1 = new JTextField();
+        p_up.add(input1);
+
+        JLabel label2 = new JLabel("Value");
+        p_up.add(label2);
+        input2 = new JTextField();
+        p_up.add(input2);
+
+        fill.getContentPane().add("Center", p_up);
+
+        JButton bun2 = new JButton("OK");
+        bun2.addActionListener(this);
+        fill.getContentPane().add("South", bun2);
+
+        fill.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fill.setSize(400, 200);
+        fill.setVisible(true);
     }
-    
+
     @Override
-    public void editingStopped(ChangeEvent e)
-    {
-        int row = getEditingRow();
-        int col = getEditingColumn();
-        super.editingStopped(e);
-        Object cell = getValueAt(row, col);
-        if (cell != null) {
-            if (col == 0) {
-                //readmem
+    public void actionPerformed(ActionEvent arg0) {
+        // TODO Auto-generated method stub
+        try {
+            int addr = Integer.parseInt(input1.getText());
+            if (addr >= 4096 || addr < 0){
+                throw new Exception();
             }
-            else {
-                //writemem
-            }
+            father.cpu.setMemory(Integer.parseInt(input1.getText()), Double.parseDouble(input2.getText()));
+            father.refreshDisp();
         }
-        else {
-            if (col == 0) {
-                setValueAt(null, row, 1);
-            }
-            else {
-                //readmem
-            }
+        catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Invalid Input","Error", JOptionPane.ERROR_MESSAGE);
         }
-    }
-    
-    @Override
-    public boolean isCellEditable(int row, int col){
-        if(col == 0){
-            return true;
-        }
-        else {
-            Object cell = getValueAt(row, 0);
-            return cell != null;
-        }
+
+        fill.dispose();
     }
 }
 
@@ -61,8 +75,14 @@ public class MainUI extends javax.swing.JFrame {
     /**
      * Creates new form MainUI
      */
-    public MainUI() {
+    public MainUI()
+    {
+        cpu = new CPU();
         initComponents();
+        //Mem
+        for (int i = 0; i != mem.getRowCount(); ++i){
+            mem.setValueAt(i, i, 0);
+        }
     }
 
     /**
@@ -99,7 +119,7 @@ public class MainUI extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        mem = new MyTable();
+        mem = new javax.swing.JTable();
         jScrollPane6 = new javax.swing.JScrollPane();
         ru = new javax.swing.JTable();
         jScrollPane7 = new javax.swing.JScrollPane();
@@ -115,65 +135,64 @@ public class MainUI extends javax.swing.JFrame {
 
         jFileChooser1.setCurrentDirectory(new File(System.getProperty("user.dir")));
 
-        jButton1.setText("确定");
+        jButton1.setText("Confirm");
 
-        jButton2.setText("取消");
+        jButton2.setText("Cancel");
 
-        jLabel12.setText("连续执行指令条数");
+        jLabel12.setText("Instruction Step");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel12))
-                .addGap(40, 40, 40)
-                .addComponent(jButton2)
-                .addContainerGap(54, Short.MAX_VALUE))
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jButton1)
+                                        .addComponent(jLabel12))
+                                .addGap(40, 40, 40)
+                                .addComponent(jButton2)
+                                .addContainerGap(54, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(25, 25, 25))
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jButton1)
+                                        .addComponent(jButton2))
+                                .addGap(25, 25, 25))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Tomasulo算法演示平台");
-
-        loadButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tomasulo/load.png"))); // NOI18N
+        setTitle("Tomasulo Algorithm");
+        loadButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tomasulo/load.jpg"))); // 加载文件
         loadButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loadButtonActionPerformed(evt);
             }
         });
 
-        nextNInst.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tomasulo/nextn.jpg"))); // NOI18N
+        nextNInst.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tomasulo/nextn.jpg"))); // n步执行
         nextNInst.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nextNInstActionPerformed(evt);
             }
         });
 
-        nextInst.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tomasulo/next.jpg"))); // NOI18N
+        nextInst.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tomasulo/next.jpg"))); // 单步执行
         nextInst.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nextInstActionPerformed(evt);
             }
         });
 
-        exitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tomasulo/exit.png"))); // NOI18N
+        exitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tomasulo/editmem.jpg"))); // 编辑内存
         exitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitButtonActionPerformed(evt);
+                editMemActionPerformed(evt);
             }
         });
 
@@ -181,36 +200,36 @@ public class MainUI extends javax.swing.JFrame {
         instQueue.setShowVerticalLines(true);
         instQueue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         instQueue.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Name", "Desti", "Sourcej", "Sourcek"
-            }
+                new Object[][]{
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
+                },
+                new String[]{
+                        "Name", "Desti", "Sourcej", "Sourcek"
+                }
         ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            Class[] types = new Class[]{
+                    java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
+            boolean[] canEdit = new boolean[]{
+                    false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
             }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         instQueue.setEnabled(false);
@@ -218,42 +237,42 @@ public class MainUI extends javax.swing.JFrame {
         jScrollPane1.setViewportView(instQueue);
 
         jLabel1.setFont(new java.awt.Font("楷体", 0, 18)); // NOI18N
-        jLabel1.setText("指令队列");
+        jLabel1.setText("Instruction Queue");
 
         runState.setShowHorizontalLines(true);
         runState.setShowVerticalLines(true);
         runState.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         runState.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "发射指令", "执行状态", "写回结果"
-            }
+                new Object[][]{
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
+                },
+                new String[]{
+                        "Pending", "Running", "Finished", "W.B."
+                }
         ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            Class[] types = new Class[]{
+                    java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
+            boolean[] canEdit = new boolean[]{
+                    false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
             }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         runState.setEnabled(false);
@@ -261,7 +280,7 @@ public class MainUI extends javax.swing.JFrame {
         jScrollPane2.setViewportView(runState);
 
         jLabel2.setFont(new java.awt.Font("楷体", 0, 18)); // NOI18N
-        jLabel2.setText("运行状态");
+        jLabel2.setText("Execution Status");
 
         jScrollPane3.setAutoscrolls(true);
         jScrollPane3.setHorizontalScrollBar(null);
@@ -270,28 +289,28 @@ public class MainUI extends javax.swing.JFrame {
         loadQueue.setShowVerticalLines(true);
         loadQueue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         loadQueue.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"Load1", null, null, null},
-                {"Load2", null, null, null},
-                {"Load3", null, null, null}
-            },
-            new String [] {
-                "", "Busy", "Address", "Cache"
-            }
+                new Object[][]{
+                        {"Load1", null, null},
+                        {"Load2", null, null},
+                        {"Load3", null, null}
+                },
+                new String[]{
+                        " ", "Busy", "Address"
+                }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            Class[] types = new Class[]{
+                    java.lang.Object.class, java.lang.String.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
+            boolean[] canEdit = new boolean[]{
+                    false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
             }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         loadQueue.setEnabled(false);
@@ -307,28 +326,28 @@ public class MainUI extends javax.swing.JFrame {
         storeQueue.setShowVerticalLines(true);
         storeQueue.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         storeQueue.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"Store1", null, null, null},
-                {"Store2", null, null, null},
-                {"Store3", null, null, null}
-            },
-            new String [] {
-                "", "Busy", "Address", "Qi"
-            }
+                new Object[][]{
+                        {"Store1", null, null, null},
+                        {"Store2", null, null, null},
+                        {"Store3", null, null, null}
+                },
+                new String[]{
+                        " ", "Busy", "Address", "Qi"
+                }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            Class[] types = new Class[]{
+                    java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
+            boolean[] canEdit = new boolean[]{
+                    false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
             }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         storeQueue.setEnabled(false);
@@ -341,96 +360,109 @@ public class MainUI extends javax.swing.JFrame {
         jLabel4.setText("Store Queue");
 
         jLabel5.setFont(new java.awt.Font("楷体", 0, 18)); // NOI18N
-        jLabel5.setText("指令条数：6    PC：0");
+        jLabel5.setText("Instruction Count:0");
 
         jLabel6.setFont(new java.awt.Font("楷体", 0, 18)); // NOI18N
-        jLabel6.setText("内存 MEM");
+        jLabel6.setText("MEMORY");
 
         mem.setShowHorizontalLines(true);
         mem.setShowVerticalLines(true);
-        mem.getModel().addTableModelListener(new TableModelListener()
-            {
-                @Override
-                public void tableChanged(TableModelEvent e)
-                {
+        mem.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if (e.getClickCount() == 2) {
+                    String inputValue = jOptionPane1.showInputDialog("Memory Start Addr", "0");
+                    try {
+                        int memstart = Integer.valueOf(inputValue);
+                        if (memstart < 0 || memstart >= 4096) {
+                            throw new Exception();
+                        }
+                        for (int i = memstart; i < 4096 && i < memstart + mem.getRowCount(); ++i) {
+                            mem.setValueAt(i, i - memstart, 0);
+                            mem.setValueAt(cpu.getMemory(i), i - memstart, 1);
+                        }
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, "Invalid Memory Addr", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
 
-                    int col = e.getColumn();
-                    int row = e.getFirstRow();
-                    System.out.println(col + " " + row);
                 }
-            });
-            mem.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null},
-                    {null, null}
+            }
+
+        });
+
+        mem.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null},
+                        {null, null}
                 },
-                new String [] {
-                    "地址", "数据"
+                new String[]{
+                        "Addr", "Data"
                 }
-            ) {
-                Class[] types = new Class [] {
-                    java.lang.Integer.class, java.lang.Integer.class
-                };
-                boolean[] canEdit = new boolean [] {
-                    true, false
-                };
+        ) {
+            Class[] types = new Class[]{
+                    java.lang.Integer.class, java.lang.Double.class
+            };
+            boolean[] canEdit = new boolean[]{
+                    false, false
+            };
 
-                public Class getColumnClass(int columnIndex) {
-                    return types [columnIndex];
-                }
+            public Class getColumnClass(int columnIndex) {
+                return types[columnIndex];
+            }
 
-                public boolean isCellEditable(int rowIndex, int columnIndex) {
-                    return canEdit [columnIndex];
-                }
-            });
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        });
             mem.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
             jScrollPane5.setViewportView(mem);
 
@@ -438,26 +470,26 @@ public class MainUI extends javax.swing.JFrame {
             ru.setShowVerticalLines(true);
             ru.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
             ru.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                    {"数据", null, null, null, null, null, null, null, null, null, null, null}
-                },
-                new String [] {
-                    "寄存器号", "R0", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10"
-                }
+                    new Object[][]{
+                            {"Data", null, null, null, null, null, null, null, null, null, null, null}
+                    },
+                    new String[]{
+                            "Reg Num.", "R0", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10"
+                    }
             ) {
-                Class[] types = new Class [] {
-                    java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                Class[] types = new Class[]{
+                        java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
                 };
-                boolean[] canEdit = new boolean [] {
-                    false, false, false, false, false, false, false, false, false, false, false, false
+                boolean[] canEdit = new boolean[]{
+                        false, false, false, false, false, false, false, false, false, false, false, false
                 };
 
                 public Class getColumnClass(int columnIndex) {
-                    return types [columnIndex];
+                    return types[columnIndex];
                 }
 
                 public boolean isCellEditable(int rowIndex, int columnIndex) {
-                    return canEdit [columnIndex];
+                    return canEdit[columnIndex];
                 }
             });
             ru.setEnabled(false);
@@ -468,30 +500,30 @@ public class MainUI extends javax.swing.JFrame {
             reservationStations.setShowVerticalLines(true);
             reservationStations.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
             reservationStations.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null}
-                },
-                new String [] {
-                    "Time", "Name", "Busy", "Op", "Vj", "Vk", "Qj", "Qk"
-                }
+                    new Object[][]{
+                            {"Add1", null, null, null, null, null, null},
+                            {"Add2", null, null, null, null, null, null},
+                            {"Add3", null, null, null, null, null, null},
+                            {"Mult1", null, null, null, null, null, null},
+                            {"Mult2", null, null, null, null, null, null}
+                    },
+                    new String[]{
+                            "Name", "Busy", "Op", "Vj", "Vk", "Qj", "Qk"
+                    }
             ) {
-                Class[] types = new Class [] {
-                    java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                Class[] types = new Class[]{
+                        java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
                 };
-                boolean[] canEdit = new boolean [] {
-                    false, false, false, false, false, false, false, false
+                boolean[] canEdit = new boolean[]{
+                        false, false, false, false, false, false, false
                 };
 
                 public Class getColumnClass(int columnIndex) {
-                    return types [columnIndex];
+                    return types[columnIndex];
                 }
 
                 public boolean isCellEditable(int rowIndex, int columnIndex) {
-                    return canEdit [columnIndex];
+                    return canEdit[columnIndex];
                 }
             });
             reservationStations.setEnabled(false);
@@ -502,27 +534,27 @@ public class MainUI extends javax.swing.JFrame {
             fu.setShowVerticalLines(true);
             fu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
             fu.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                    {"表达式", null, null, null, null, null, null, null, null, null, null, null},
-                    {"数据", null, null, null, null, null, null, null, null, null, null, null}
-                },
-                new String [] {
-                    "寄存器号", "F0", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10"
-                }
+                    new Object[][]{
+                            {"Expr", null, null, null, null, null, null, null, null, null, null, null},
+                            {"Data", null, null, null, null, null, null, null, null, null, null, null}
+                    },
+                    new String[]{
+                            "Reg No.", "F0", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10"
+                    }
             ) {
-                Class[] types = new Class [] {
-                    java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                Class[] types = new Class[]{
+                        java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
                 };
-                boolean[] canEdit = new boolean [] {
-                    false, false, false, false, false, false, false, false, false, false, false, false
+                boolean[] canEdit = new boolean[]{
+                        false, false, false, false, false, false, false, false, false, false, false, false
                 };
 
                 public Class getColumnClass(int columnIndex) {
-                    return types [columnIndex];
+                    return types[columnIndex];
                 }
 
                 public boolean isCellEditable(int rowIndex, int columnIndex) {
-                    return canEdit [columnIndex];
+                    return canEdit[columnIndex];
                 }
             });
             fu.setEnabled(false);
@@ -530,15 +562,15 @@ public class MainUI extends javax.swing.JFrame {
             jScrollPane8.setViewportView(fu);
 
             jLabel7.setFont(new java.awt.Font("楷体", 0, 18)); // NOI18N
-            jLabel7.setText("浮点寄存器FU");
+            jLabel7.setText("FU");
 
             jLabel8.setFont(new java.awt.Font("楷体", 0, 18)); // NOI18N
             jLabel8.setText("Reservation Stations");
 
             jLabel9.setFont(new java.awt.Font("楷体", 0, 18)); // NOI18N
-            jLabel9.setText("整数寄存器RU");
+            jLabel9.setText("RU");
 
-            jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tomasulo/clock.jpg"))); // NOI18N
+            jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tomasulo/clock.png"))); // NOI18N
 
             jLabel11.setFont(new java.awt.Font("宋体", 0, 48)); // NOI18N
             jLabel11.setText("0");
@@ -557,166 +589,395 @@ public class MainUI extends javax.swing.JFrame {
             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
             getContentPane().setLayout(layout);
             layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(24, 24, 24)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 1180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(269, 269, 269)
-                                            .addComponent(jLabel8)
-                                            .addGap(286, 286, 286))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(29, 29, 29)
-                                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(loadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(27, 27, 27)
-                                                        .addComponent(nextInst, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(32, 32, 32)
-                                                        .addComponent(nextNInst, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(28, 28, 28)
-                                                        .addComponent(reset, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(28, 28, 28)
-                                                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(30, 30, 30)
-                                                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addGap(110, 110, 110)
-                                                    .addComponent(jLabel1)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(jLabel2)
-                                                    .addGap(160, 160, 160)))
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addGap(37, 37, 37))
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                    .addComponent(jLabel3)
-                                                    .addGap(134, 134, 134))
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addGap(85, 85, 85)
-                                                    .addComponent(jLabel4)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))))
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addComponent(jLabel6)
-                                            .addGap(81, 81, 81))
-                                        .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 1180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 1181, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(557, 557, 557)
-                            .addComponent(jLabel7))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(561, 561, 561)
-                            .addComponent(jLabel9)))
-                    .addGap(8, 43, Short.MAX_VALUE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                    .addGap(24, 24, 24)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 1180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addGroup(layout.createSequentialGroup()
+                                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                            .addGroup(layout.createSequentialGroup()
+                                                                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                    .addGap(269, 269, 269)
+                                                                                    .addComponent(jLabel8)
+                                                                                    .addGap(286, 286, 286))
+                                                                            .addGroup(layout.createSequentialGroup()
+                                                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                                                    .addGroup(layout.createSequentialGroup()
+                                                                                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                            .addGap(29, 29, 29)
+                                                                                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                                                    .addGroup(layout.createSequentialGroup()
+                                                                                                            .addComponent(loadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                            .addGap(27, 27, 27)
+                                                                                                            .addComponent(nextInst, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                            .addGap(32, 32, 32)
+                                                                                                            .addComponent(nextNInst, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                            .addGap(28, 28, 28)
+                                                                                                            .addComponent(reset, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                            .addGap(28, 28, 28)
+                                                                                                            .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                                                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                            .addGap(30, 30, 30)
+                                                                                                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                                                            .addGroup(layout.createSequentialGroup()
+                                                                                                    .addGap(110, 110, 110)
+                                                                                                    .addComponent(jLabel1)
+                                                                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                                                    .addComponent(jLabel2)
+                                                                                                    .addGap(160, 160, 160)))
+                                                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                                                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                                                    .addGap(37, 37, 37))
+                                                                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                                                    .addComponent(jLabel3)
+                                                                                                    .addGap(134, 134, 134))
+                                                                                            .addGroup(layout.createSequentialGroup()
+                                                                                                    .addGap(85, 85, 85)
+                                                                                                    .addComponent(jLabel4)
+                                                                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))))
+                                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                                    .addComponent(jLabel6)
+                                                                                    .addGap(81, 81, 81))
+                                                                            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 1180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 1181, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGroup(layout.createSequentialGroup()
+                                                    .addGap(557, 557, 557)
+                                                    .addComponent(jLabel7))
+                                            .addGroup(layout.createSequentialGroup()
+                                                    .addGap(561, 561, 561)
+                                                    .addComponent(jLabel9)))
+                                    .addGap(8, 43, Short.MAX_VALUE))
             );
             layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(22, 22, 22)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(loadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(nextInst, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(reset, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(nextNInst, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel5))
-                                .addGroup(layout.createSequentialGroup()
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(0, 0, Short.MAX_VALUE)
-                                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(2, 2, 2)
-                                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGap(4, 4, 4)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGap(0, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(27, 27, 27)))
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(22, 22, 22))
+                                            .addGroup(layout.createSequentialGroup()
+                                                    .addGap(22, 22, 22)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                            .addGroup(layout.createSequentialGroup()
+                                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                            .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                            .addComponent(loadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                            .addComponent(nextInst, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                                                    .addComponent(reset, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                    .addComponent(nextNInst, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                    .addComponent(jLabel5))
+                                                            .addGroup(layout.createSequentialGroup()
+                                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                            .addGroup(layout.createSequentialGroup()
+                                                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                                                            .addGroup(layout.createSequentialGroup()
+                                                                                    .addGap(0, 0, Short.MAX_VALUE)
+                                                                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                    .addGap(2, 2, 2)
+                                                                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                                    .addGap(4, 4, 4)
+                                                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                    .addGap(0, 0, Short.MAX_VALUE)
+                                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(27, 27, 27)))
+                                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(22, 22, 22))
             );
 
             pack();
         }// </editor-fold>
 
-    private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        // TODO add your handling code here:
+    private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {
         int flag = jFileChooser1.showOpenDialog(this);
         if(flag ==JFileChooser.APPROVE_OPTION){
             File file = jFileChooser1.getSelectedFile();
-            System.out.println(file.getName());
+            try {
+                if (file.isFile()){
+                    InputStreamReader reader = new InputStreamReader(new FileInputStream(file), "GBK");
+                    BufferedReader bfreader = new BufferedReader(reader);
+                    String linetext = null;
+                    int row = 0;
+                    while ((linetext = bfreader.readLine()) != null){
+                        //System.out.println(linetext);
+                        Instruction inst = InstrParser.parseInstruction(linetext);
+                        this.cpu.addInstruction(inst);
+                        //System.out.println(inst.toString());
+                        instQueue.setValueAt(inst.type.name(), row, 0);
+                        if (inst.type == Instruction.Type.LD || inst.type == Instruction.Type.ST){
+                            instQueue.setValueAt("F" + inst.reg, row, 1);
+                            instQueue.setValueAt(String.valueOf(inst.addr), row, 2);
+                        }
+                        else {
+                            instQueue.setValueAt("F" + inst.dest, row, 1);
+                            instQueue.setValueAt("F" + inst.src1, row, 2);
+                            instQueue.setValueAt("F" + inst.src2, row, 3);
+                        }
+
+                        row++;
+                    }
+                    jLabel5.setText("Instruction Count:" + row);
+                    refreshDisp();
+                }
+            }
+            catch (Exception e){
+                System.out.println(e);
+                JOptionPane.showMessageDialog(null,"Invalid instruction found.","Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }                                          
 
     private void nextNInstActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        // TODO add your handling code here:
-        String inputValue = jOptionPane1.showInputDialog("连续执行指令条数");
-        System.out.println(inputValue);
+        String inputValue = jOptionPane1.showInputDialog("Instruction step", "1");
+        try {
+            int actionNum = Integer.parseInt(inputValue);
+            for (int i = 0; i != actionNum; ++i){
+                cpu.onTick();
+            }
+            int t = Integer.parseInt(jLabel11.getText())+actionNum;
+            jLabel11.setText(String.valueOf(t));
+            refreshDisp();
+        }
+        catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Invalid step number.","Error", JOptionPane.ERROR_MESSAGE);
+        }
     }                                         
 
     private void nextInstActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
+        cpu.onTick();
+        int t = Integer.parseInt(jLabel11.getText())+1;
+        jLabel11.setText(String.valueOf(t));
+        refreshDisp();
     }                                        
 
-    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        // TODO add your handling code here:
-        System.exit(0);
-    }                                          
+    private void editMemActionPerformed(java.awt.event.ActionEvent evt) {
+        new MemoryInputTable(this);
+        /*
+        String memAddr = jOptionPane1.showInputDialog("Memory Addr", "0");
+        String value = jOptionPane1.showInputDialog("Value", "0.0");
+        try{
+            int addr = Integer.parseInt(memAddr);
+            if (addr < 0 || addr >= 4096){
+                throw new Exception();
+            }
+            Double v = Double.parseDouble(value);
+            cpu.setMemory(addr, v);
+            refreshDisp();
+        }
+        catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Invalid Input","Error", JOptionPane.ERROR_MESSAGE);
+        }
+        */
+    }
+
+    private String ref2Name(int reference){
+        String name = null, ind = null;
+        if (reference == 0)
+            return "0";
+        assert (reference <= 11);
+        switch (reference){
+            case 1:case 2:case 3:
+                name = "Add";
+                break;
+            case 4:case 5:
+                name = "Mult";
+                break;
+            case 6:case 7:case 8:
+                name = "Load";
+                break;
+            case 9:case 10:case 11:
+                name = "Store";
+                break;
+        }
+        switch (reference){
+            case 1:case 4:case 6:case 9:
+                ind = "1";
+                break;
+            case 2:case 5:case 7:case 10:
+                ind = "2";
+                break;
+            case 3:case 8:case 11:
+                ind = "3";
+                break;
+        }
+        return name+ind;
+    }
 
     private void resetActionPerformed(java.awt.event.ActionEvent evt) {                                      
-        // TODO add your handling code here:
-    }                                     
+        //233333
+        cpu = new CPU();
+        //inst table
+        for (int i = 0; i != instQueue.getRowCount(); ++i){
+            for (int j = 0; j != instQueue.getColumnCount(); ++j){
+                instQueue.setValueAt(" ", i, j);
+            }
+        }
+        Instruction.count = 0;
+        jLabel5.setText("Instruction Count: 0");
+        jLabel11.setText("0");
+        //Mem
+        for (int i = 0; i != mem.getRowCount(); ++i){
+            mem.setValueAt(i, i, 0);
+        }
+        refreshDisp();
+    }
+
+    /*
+    returns true if instruction type is mem or load and instruction is valid
+     */
+    private boolean isMemInstructionType(Instruction.Type t){
+        return (t == Instruction.Type.ST || t == Instruction.Type.LD);
+    }
+
+
+    protected void refreshDisp(){
+        //execution status
+        ArrayList<Instruction> pending_instructions = this.cpu.getPendingInstructionQueue();
+        ArrayList<Instruction> running_instructions = this.cpu.getRunningInstructionQueue();
+        ArrayList<Instruction> finished_instructions = this.cpu.getFinishedInstructionQueue();
+        ArrayList<Instruction> wb_instructions = this.cpu.getWriteBackedInstructionQueue();
+        //clear
+        for (int row = 0; row != runState.getRowCount(); ++row){
+            for (int k = 0; k != 4; ++k) {
+                runState.setValueAt(" ", row, k);
+            }
+        }
+        //fill
+        for (Instruction i : pending_instructions){
+            runState.setValueAt("*", i.id, 0);
+        }
+        for (Instruction i : running_instructions){
+            runState.setValueAt("*", i.id, 1);
+        }
+        for (Instruction i : finished_instructions){
+            runState.setValueAt("*", i.id, 2);
+        }
+        for (Instruction i : wb_instructions){
+            runState.setValueAt("*", i.id, 3);
+        }
+        //load queue
+        //System.out.println(cpu.getReservations().size());
+        ArrayList<Reservation> reservations = cpu.getReservations();
+        for (int i = 0; i != 3; ++i){
+            Reservation mReservation = reservations.get(i+5);
+            if (mReservation.isOccupied()) {
+                loadQueue.setValueAt("YES", i, 1);
+                loadQueue.setValueAt(String.valueOf(mReservation.address), i, 2);
+            }
+            else {
+                loadQueue.setValueAt("NO", i, 1);
+                loadQueue.setValueAt(" ", i, 2);
+            }
+
+        }
+
+        //Store queue
+        for (int i = 0; i != 3; ++i){
+            Reservation mReservation = reservations.get(i+8);
+            if (mReservation.isOccupied()) {
+                storeQueue.setValueAt("YES", i, 1);
+                storeQueue.setValueAt(String.valueOf(mReservation.address), i, 2);
+                storeQueue.setValueAt(String.valueOf(mReservation.srcData1.reference), i, 3);
+            }
+            else {
+                storeQueue.setValueAt("NO", i, 1);
+                storeQueue.setValueAt(" ", i, 2);
+                storeQueue.setValueAt(" ", i, 3);
+            }
+        }
+
+        //Reservation Stations
+        for (int i = 0; i != 5; ++i){
+            Reservation mReservation = reservations.get(i);
+            if (mReservation.isOccupied()){
+                reservationStations.setValueAt("YES", i, 1);
+                reservationStations.setValueAt(mReservation.instruction.type.name(),i,2);
+                if (mReservation.srcData1.reference == 0){
+                    reservationStations.setValueAt(String.valueOf(mReservation.srcData1.value), i, 3);
+                    reservationStations.setValueAt("0", i, 5);
+                }
+                else{
+                    reservationStations.setValueAt(" ", i, 3);
+                    reservationStations.setValueAt(ref2Name(mReservation.srcData1.reference), i, 5);
+                }
+
+                if (mReservation.srcData2.reference == 0){
+                    reservationStations.setValueAt(String.valueOf(mReservation.srcData2.value), i, 4);
+                    reservationStations.setValueAt("0", i, 6);
+                }
+                else{
+                    reservationStations.setValueAt(" ", i, 4);
+                    reservationStations.setValueAt(ref2Name(mReservation.srcData2.reference), i, 6);
+                }
+            }
+            else{
+                reservationStations.setValueAt("NO", i, 1);
+                for (int col = 2; col <=6; ++col){
+                    reservationStations.setValueAt(" ", i, col);
+                }
+            }
+        }
+
+        //FU
+        System.out.println(cpu.getReg(0));
+        for (int i = 0 ; i != 10; ++i){
+            //clear expr
+            fu.setValueAt(" ",1,i+1);
+            for (Reservation r:cpu.getReservations()){
+                if (r.isOccupied() && ((r.instruction.reg == i && isMemInstructionType(r.instruction.type)) || (r.instruction.dest == i && !isMemInstructionType(r.instruction.type)))){
+                    fu.setValueAt(r.instruction.toString(), 0, i+1);
+                    break;
+                }
+            }
+            //set value
+            fu.setValueAt(String.valueOf(cpu.getReg(i).value),1,i+1);
+        }
+
+        //MEM
+        for (int i = 0; i != mem.getRowCount(); ++i){
+            try{
+                int k = (int)mem.getValueAt(i, 0);
+                double v = cpu.getMemory(k);
+                mem.setValueAt(v, i, 1);
+            }
+            catch (Exception e){}
+        }
+
+    }
 
     /**
      * @param args the command line arguments
@@ -792,4 +1053,6 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JTable runState;
     private javax.swing.JTable storeQueue;
     // End of variables declaration
+
+    static public CPU cpu;
 }
