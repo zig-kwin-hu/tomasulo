@@ -2,25 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="074da0d5-646d-479c-aa8c-f79867e54f61" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DataTypes/tomasulo/PhaseData.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Components/tomasulo/MemComponent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DataTypes/tomasulo/MemInstSeq.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/tomasulo-master-3/tomasulo/CPU.class" afterPath="$PROJECT_DIR$/out/production/tomasulo-master-3/tomasulo/CPU.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CPU/tomasulo/CPU.java" afterPath="$PROJECT_DIR$/CPU/tomasulo/CPU.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CPU/tomasulo/Reservation.java" afterPath="$PROJECT_DIR$/CPU/tomasulo/Reservation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Components/tomasulo/AddSubtractComponent.java" afterPath="$PROJECT_DIR$/Components/tomasulo/AddSubtractComponent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Components/tomasulo/Component.java" afterPath="$PROJECT_DIR$/Components/tomasulo/Component.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Components/tomasulo/LoadComponent.java" afterPath="$PROJECT_DIR$/Components/tomasulo/LoadComponent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Components/tomasulo/MultiplyDivideComponent.java" afterPath="$PROJECT_DIR$/Components/tomasulo/MultiplyDivideComponent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Components/tomasulo/StoreComponent.java" afterPath="$PROJECT_DIR$/Components/tomasulo/StoreComponent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Resources/tomasulo/Adder.java" afterPath="$PROJECT_DIR$/Resources/tomasulo/Adder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Resources/tomasulo/ComputeQuery.java" afterPath="$PROJECT_DIR$/Resources/tomasulo/ComputeQuery.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Resources/tomasulo/Divider.java" afterPath="$PROJECT_DIR$/Resources/tomasulo/Divider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Resources/tomasulo/LoadQuery.java" afterPath="$PROJECT_DIR$/Resources/tomasulo/LoadQuery.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Resources/tomasulo/Memory.java" afterPath="$PROJECT_DIR$/Resources/tomasulo/Memory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Resources/tomasulo/Multipier.java" afterPath="$PROJECT_DIR$/Resources/tomasulo/Multipier.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Resources/tomasulo/MultiplyDivider.java" afterPath="$PROJECT_DIR$/Resources/tomasulo/MultiplyDivider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Resources/tomasulo/Query.java" afterPath="$PROJECT_DIR$/Resources/tomasulo/Query.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Resources/tomasulo/Resource.java" afterPath="$PROJECT_DIR$/Resources/tomasulo/Resource.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Resources/tomasulo/StoreQuery.java" afterPath="$PROJECT_DIR$/Resources/tomasulo/StoreQuery.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -33,11 +19,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="CPU.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CPU.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CPU/tomasulo/CPU.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="19" column="34" lean-forward="false" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
+            <state relative-caret-position="-1406">
+              <caret line="28" column="69" lean-forward="false" selection-start-line="28" selection-start-column="69" selection-end-line="28" selection-end-column="69" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -45,11 +31,57 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="Reservation.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CPU/tomasulo/Reservation.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="38">
+              <caret line="21" column="16" lean-forward="false" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OpQuene.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CPU/tomasulo/OpQuene.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="311">
+              <caret line="75" column="5" lean-forward="true" selection-start-line="75" selection-start-column="5" selection-end-line="75" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Resource.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Resources/tomasulo/Resource.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="20" lean-forward="true" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="51" />
+            <state relative-caret-position="133">
+              <caret line="23" column="19" lean-forward="false" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="19" />
+              <folding>
+                <element signature="e#444#445#0" expanded="true" />
+                <element signature="e#475#476#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MemComponent.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Components/tomasulo/MemComponent.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="322">
+              <caret line="178" column="42" lean-forward="false" selection-start-line="178" selection-start-column="42" selection-end-line="178" selection-end-column="42" />
+              <folding>
+                <element signature="e#5502#5516#0" expanded="true" />
+                <element signature="e#8058#8071#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MemInstSeq.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DataTypes/tomasulo/MemInstSeq.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="20" column="31" lean-forward="true" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -58,55 +90,9 @@
       <file leaf-file-name="Memory.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Resources/tomasulo/Memory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-96">
-              <caret line="7" column="34" lean-forward="false" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
+            <state relative-caret-position="465">
+              <caret line="38" column="5" lean-forward="false" selection-start-line="38" selection-start-column="5" selection-end-line="38" selection-end-column="5" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Multipier.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Resources/tomasulo/Multipier.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="7" column="34" lean-forward="false" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MultiplyDivider.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Resources/tomasulo/MultiplyDivider.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="555">
-              <caret line="37" column="1" lean-forward="false" selection-start-line="37" selection-start-column="1" selection-end-line="37" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Divider.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Resources/tomasulo/Divider.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="36" lean-forward="false" selection-start-line="7" selection-start-column="36" selection-end-line="7" selection-end-column="36" />
-              <folding>
-                <element signature="e#153#154#0" expanded="true" />
-                <element signature="e#196#197#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Adder.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Resources/tomasulo/Adder.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="34" lean-forward="false" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
-              <folding>
-                <element signature="e#105#106#0" expanded="true" />
-                <element signature="e#139#140#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -114,8 +100,8 @@
       <file leaf-file-name="Component.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Components/tomasulo/Component.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-602">
-              <caret line="71" column="71" lean-forward="false" selection-start-line="71" selection-start-column="71" selection-end-line="71" selection-end-column="71" />
+            <state relative-caret-position="-105">
+              <caret line="102" column="13" lean-forward="true" selection-start-line="102" selection-start-column="13" selection-end-line="102" selection-end-column="13" />
               <folding>
                 <element signature="e#1749#1763#0" expanded="true" />
               </folding>
@@ -123,24 +109,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PhaseData.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DataTypes/tomasulo/PhaseData.java">
+      <file leaf-file-name="StoreComponent.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Components/tomasulo/StoreComponent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="22" column="40" lean-forward="false" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
+            <state relative-caret-position="170">
+              <caret line="18" column="8" lean-forward="false" selection-start-line="18" selection-start-column="8" selection-end-line="19" selection-end-column="48" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MultiplyDivideComponent.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Components/tomasulo/MultiplyDivideComponent.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-293">
-              <caret line="54" column="43" lean-forward="false" selection-start-line="54" selection-start-column="43" selection-end-line="54" selection-end-column="43" />
-              <folding>
-                <element signature="e#973#987#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -159,10 +133,10 @@
       <find>True</find>
       <find>false</find>
       <find>4214.45</find>
-      <find>should</find>
       <find>sho</find>
-      <find>div</find>
       <find>resource</find>
+      <find>div</find>
+      <find>should</find>
       <find>Resource</find>
     </findStrings>
   </component>
@@ -192,14 +166,16 @@
         <option value="$PROJECT_DIR$/Components/tomasulo/LoadComponent.java" />
         <option value="$PROJECT_DIR$/Components/tomasulo/StoreComponent.java" />
         <option value="$PROJECT_DIR$/Resources/tomasulo/Resource.java" />
-        <option value="$PROJECT_DIR$/Resources/tomasulo/Memory.java" />
         <option value="$PROJECT_DIR$/Resources/tomasulo/Multipier.java" />
         <option value="$PROJECT_DIR$/Resources/tomasulo/MultiplyDivider.java" />
         <option value="$PROJECT_DIR$/Resources/tomasulo/Divider.java" />
         <option value="$PROJECT_DIR$/Resources/tomasulo/Adder.java" />
         <option value="$PROJECT_DIR$/Components/tomasulo/Component.java" />
         <option value="$PROJECT_DIR$/Components/tomasulo/MultiplyDivideComponent.java" />
+        <option value="$PROJECT_DIR$/DataTypes/tomasulo/MemInstSeq.java" />
+        <option value="$PROJECT_DIR$/Resources/tomasulo/Memory.java" />
         <option value="$PROJECT_DIR$/CPU/tomasulo/CPU.java" />
+        <option value="$PROJECT_DIR$/Components/tomasulo/MemComponent.java" />
       </list>
     </option>
   </component>
@@ -836,14 +812,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CPU/tomasulo/OpQuene.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="31" column="36" lean-forward="false" selection-start-line="31" selection-start-column="36" selection-end-line="31" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Resources/tomasulo/LoadQuery.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -876,17 +844,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CPU/tomasulo/Reservation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="17" column="19" lean-forward="false" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="19" />
-          <folding>
-            <element signature="e#311#312#0" expanded="true" />
-            <element signature="e#392#393#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DataTypes/tomasulo/Data.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="275">
@@ -907,22 +864,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="138">
           <caret line="18" column="36" lean-forward="false" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="67" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Components/tomasulo/LoadComponent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="21" column="53" lean-forward="false" selection-start-line="21" selection-start-column="53" selection-end-line="21" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Components/tomasulo/StoreComponent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="38" lean-forward="false" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="38" />
           <folding />
         </state>
       </provider>
@@ -964,8 +905,8 @@
         <state relative-caret-position="105">
           <caret line="7" column="36" lean-forward="false" selection-start-line="7" selection-start-column="36" selection-end-line="7" selection-end-column="36" />
           <folding>
-            <element signature="e#153#154#0" expanded="true" />
-            <element signature="e#196#197#0" expanded="true" />
+            <element signature="e#153#154#0" expanded="false" />
+            <element signature="e#196#197#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -975,35 +916,9 @@
         <state relative-caret-position="75">
           <caret line="5" column="34" lean-forward="false" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
           <folding>
-            <element signature="e#105#106#0" expanded="true" />
-            <element signature="e#139#140#0" expanded="true" />
+            <element signature="e#105#106#0" expanded="false" />
+            <element signature="e#139#140#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Resources/tomasulo/Memory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-96">
-          <caret line="7" column="34" lean-forward="false" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Components/tomasulo/Component.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-602">
-          <caret line="71" column="71" lean-forward="false" selection-start-line="71" selection-start-column="71" selection-end-line="71" selection-end-column="71" />
-          <folding>
-            <element signature="e#1749#1763#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Resources/tomasulo/Resource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="20" lean-forward="true" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1017,12 +932,100 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Components/tomasulo/LoadComponent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="49">
+          <caret line="4" column="4" lean-forward="false" selection-start-line="4" selection-start-column="4" selection-end-line="7" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Components/tomasulo/StoreComponent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="18" column="8" lean-forward="false" selection-start-line="18" selection-start-column="8" selection-end-line="19" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Components/tomasulo/Component.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-105">
+          <caret line="102" column="13" lean-forward="true" selection-start-line="102" selection-start-column="13" selection-end-line="102" selection-end-column="13" />
+          <folding>
+            <element signature="e#1749#1763#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DataTypes/tomasulo/MemInstSeq.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="31" lean-forward="true" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CPU/tomasulo/Reservation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="21" column="16" lean-forward="false" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resources/tomasulo/Memory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="38" column="5" lean-forward="false" selection-start-line="38" selection-start-column="5" selection-end-line="38" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resources/tomasulo/Resource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="23" column="19" lean-forward="false" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="19" />
+          <folding>
+            <element signature="e#444#445#0" expanded="true" />
+            <element signature="e#475#476#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/CPU/tomasulo/CPU.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="19" column="34" lean-forward="false" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
+        <state relative-caret-position="-1406">
+          <caret line="28" column="69" lean-forward="false" selection-start-line="28" selection-start-column="69" selection-end-line="28" selection-end-column="69" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_77.jdk/Contents/Home/src.zip!/java/util/ArrayList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="850" column="0" lean-forward="false" selection-start-line="850" selection-start-column="0" selection-end-line="850" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CPU/tomasulo/OpQuene.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="75" column="5" lean-forward="true" selection-start-line="75" selection-start-column="5" selection-end-line="75" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Components/tomasulo/MemComponent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="178" column="42" lean-forward="false" selection-start-line="178" selection-start-column="42" selection-end-line="178" selection-end-column="42" />
+          <folding>
+            <element signature="e#5502#5516#0" expanded="true" />
+            <element signature="e#8058#8071#0" expanded="true" />
           </folding>
         </state>
       </provider>

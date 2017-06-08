@@ -24,8 +24,9 @@ public class CPU {
 		
 		// Component
 		this.components = new ArrayList<Component>();
-		this.components.add(new LoadComponent(3, this.regFile, memory));
-		this.components.add(new StoreComponent(3, this.regFile, memory));
+		//this.components.add(new LoadComponent(3, this.regFile, memory));
+		//this.components.add(new StoreComponent(3, this.regFile, memory));
+		this.components.add(new MemComponent(3,this.regFile,memory));
 		this.components.add(new AddSubtractComponent(3, regFile, adder));
 		this.components.add(new MultiplyDivideComponent(2, regFile, multipier,divider));
 		//this.components.add(new MultiplyDivideComponent(2, regFile, divider2));
@@ -87,11 +88,10 @@ public class CPU {
 		Logger.Info("Tick");
 		
 		// Issue an instruction
-		this.opQueue.onTick();
 		for (Component component: this.components){
 			component.executeOnTick();
 		}
-
+		this.opQueue.onTick();
 		//Huzikun writeback
 		for (Data data : this.changes)
 		{
