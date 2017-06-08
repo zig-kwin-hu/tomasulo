@@ -174,6 +174,7 @@ public class MainUI extends javax.swing.JFrame {
                 loadButtonActionPerformed(evt);
             }
         });
+        loadButton.setToolTipText("Load instruction file");
 
         nextNInst.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tomasulo/nextn.jpg"))); // n步执行
         nextNInst.addActionListener(new java.awt.event.ActionListener() {
@@ -181,6 +182,7 @@ public class MainUI extends javax.swing.JFrame {
                 nextNInstActionPerformed(evt);
             }
         });
+        nextNInst.setToolTipText("N step");
 
         nextInst.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tomasulo/next.jpg"))); // 单步执行
         nextInst.addActionListener(new java.awt.event.ActionListener() {
@@ -188,6 +190,7 @@ public class MainUI extends javax.swing.JFrame {
                 nextInstActionPerformed(evt);
             }
         });
+        nextInst.setToolTipText("Single step");
 
         exitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tomasulo/editmem.jpg"))); // 编辑内存
         exitButton.addActionListener(new java.awt.event.ActionListener() {
@@ -195,6 +198,7 @@ public class MainUI extends javax.swing.JFrame {
                 editMemActionPerformed(evt);
             }
         });
+        exitButton.setToolTipText("Edit memory");
 
         instQueue.setShowHorizontalLines(true);
         instQueue.setShowVerticalLines(true);
@@ -372,7 +376,7 @@ public class MainUI extends javax.swing.JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 if (e.getClickCount() == 2) {
-                    String inputValue = jOptionPane1.showInputDialog("Memory Start Addr", "0");
+                    String inputValue = jOptionPane1.showInputDialog("Addr to display", "0");
                     try {
                         int memstart = Integer.valueOf(inputValue);
                         if (memstart < 0 || memstart >= 4096) {
@@ -464,6 +468,7 @@ public class MainUI extends javax.swing.JFrame {
             }
         });
             mem.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+            mem.setToolTipText("Double click to set region");
             jScrollPane5.setViewportView(mem);
 
             ru.setShowHorizontalLines(true);
@@ -585,6 +590,7 @@ public class MainUI extends javax.swing.JFrame {
                     resetActionPerformed(evt);
                 }
             });
+            reset.setToolTipText("Reset");
 
             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
             getContentPane().setLayout(layout);
