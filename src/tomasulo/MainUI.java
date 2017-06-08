@@ -795,6 +795,14 @@ public class MainUI extends javax.swing.JFrame {
         refreshDisp();
     }
 
+    /*
+    returns true if instruction type is mem or load and instruction is valid
+     */
+    private boolean isMemInstructionType(Instruction.Type t){
+        return (t == Instruction.Type.ST || t == Instruction.Type.LD);
+    }
+
+
     private void refreshDisp(){
         //execution status
         ArrayList<Instruction> pending_instructions = this.cpu.getPendingInstructionQueue();
@@ -883,12 +891,20 @@ public class MainUI extends javax.swing.JFrame {
             }
         }
 
-        //FU: expr how to cal?
+        //FU
         System.out.println(cpu.getReg(0));
         for (int i = 0 ; i != 10; ++i){
+            //clear expr
+            fu.setValueAt(" ",1,i+1);
+            for (Reservation r:cpu.getReservations()){
+                if (r.isOccupied() && ((r.instruction.reg == i && isMemInstructionType(r.instruction.type)) || (r.instruction.dest == i && !isMemInstructionType(r.instruction.type)))){
+                    fu.setValueAt(r.instruction.toString(), 0, i+1);
+                    break;
+                }
+            }
+            //set value
             fu.setValueAt(String.valueOf(cpu.getReg(i).value),1,i+1);
         }
-        //RU: ???
 
         //MEM
         for (int i = 0; i != mem.getRowCount(); ++i){
