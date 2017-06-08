@@ -738,15 +738,21 @@ public class MainUI extends javax.swing.JFrame {
                     BufferedReader bfreader = new BufferedReader(reader);
                     String linetext = null;
                     int row = 0;
-                    while ((linetext = bfreader.readLine()) != null){
+                    while ((linetext = bfreader.readLine()) != null) {
                         //System.out.println(linetext);
                         Instruction inst = InstrParser.parseInstruction(linetext);
                         this.cpu.addInstruction(inst);
                         //System.out.println(inst.toString());
                         instQueue.setValueAt(inst.type.name(), row, 0);
-                        if (inst.type == Instruction.Type.LD || inst.type == Instruction.Type.ST){
+                        if (inst.type == Instruction.Type.LD){
                             instQueue.setValueAt("F" + inst.reg, row, 1);
                             instQueue.setValueAt(String.valueOf(inst.addr), row, 2);
+                            instQueue.setValueAt("-", row, 3);
+                        }
+                        else if (inst.type == Instruction.Type.ST){
+                            instQueue.setValueAt("F" + inst.reg, row, 2);
+                            instQueue.setValueAt(String.valueOf(inst.addr), row, 3);
+                            instQueue.setValueAt("-", row, 1);
                         }
                         else {
                             instQueue.setValueAt("F" + inst.dest, row, 1);
@@ -960,7 +966,7 @@ public class MainUI extends javax.swing.JFrame {
 
         //FU
         System.out.println(cpu.getReg(0));
-        for (int i = 0 ; i != 10; ++i){
+        for (int i = 0 ; i != 11; ++i){
             //clear expr
             fu.setValueAt(" ",1,i+1);
             for (Reservation r:cpu.getReservations()){
