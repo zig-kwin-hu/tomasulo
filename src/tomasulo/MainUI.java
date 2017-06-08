@@ -4,6 +4,9 @@
  */
 package tomasulo;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
@@ -11,6 +14,61 @@ import java.lang.reflect.Executable;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.*;
+
+class MemoryInputTable implements ActionListener{
+    MainUI father;
+    JTextField input1;
+    JTextField input2;
+    private JFrame fill;
+
+    public MemoryInputTable(MainUI m) {
+        father = m;
+
+        fill = new JFrame();
+        fill.setTitle("Name and Pass");
+
+        JPanel p_up = new JPanel();
+        p_up.setLayout(new GridLayout(2, 2));
+
+        JLabel label1 = new JLabel("Address");
+        p_up.add(label1);
+        input1 = new JTextField();
+        p_up.add(input1);
+
+        JLabel label2 = new JLabel("Value");
+        p_up.add(label2);
+        input2 = new JTextField();
+        p_up.add(input2);
+
+        fill.getContentPane().add("Center", p_up);
+
+        JButton bun2 = new JButton("OK");
+        bun2.addActionListener(this);
+        fill.getContentPane().add("South", bun2);
+
+        fill.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fill.setSize(400, 200);
+        fill.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+        // TODO Auto-generated method stub
+        try {
+            int addr = Integer.parseInt(input1.getText());
+            if (addr >= 4096 || addr < 0){
+                throw new Exception();
+            }
+            father.cpu.setMemory(Integer.parseInt(input1.getText()), Double.parseDouble(input2.getText()));
+            father.refreshDisp();
+        }
+        catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Invalid Input","Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        fill.dispose();
+    }
+}
 
 public class MainUI extends javax.swing.JFrame {
 
@@ -727,6 +785,8 @@ public class MainUI extends javax.swing.JFrame {
     }                                        
 
     private void editMemActionPerformed(java.awt.event.ActionEvent evt) {
+        new MemoryInputTable(this);
+        /*
         String memAddr = jOptionPane1.showInputDialog("Memory Addr", "0");
         String value = jOptionPane1.showInputDialog("Value", "0.0");
         try{
@@ -741,6 +801,7 @@ public class MainUI extends javax.swing.JFrame {
         catch (Exception e){
             JOptionPane.showMessageDialog(null, "Invalid Input","Error", JOptionPane.ERROR_MESSAGE);
         }
+        */
     }
 
     private String ref2Name(int reference){
@@ -803,7 +864,7 @@ public class MainUI extends javax.swing.JFrame {
     }
 
 
-    private void refreshDisp(){
+    protected void refreshDisp(){
         //execution status
         ArrayList<Instruction> pending_instructions = this.cpu.getPendingInstructionQueue();
         ArrayList<Instruction> running_instructions = this.cpu.getRunningInstructionQueue();

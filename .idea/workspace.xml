@@ -25,8 +25,11 @@
         <entry file="file://$PROJECT_DIR$/CPU/tomasulo/CPU.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="67" column="17" selection-start-line="67" selection-start-column="17" selection-end-line="67" selection-end-column="17" />
-              <folding />
+              <caret line="132" column="16" selection-start-line="132" selection-start-column="16" selection-end-line="132" selection-end-column="16" />
+              <folding>
+                <element signature="e#2920#2921#0" expanded="true" />
+                <element signature="e#2958#2959#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -114,26 +117,26 @@
       <file leaf-file-name="MainUI.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/tomasulo/MainUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="23.066038">
-              <caret line="846" column="20" selection-start-line="846" selection-start-column="20" selection-end-line="846" selection-end-column="21" />
+            <state vertical-scroll-proportion="0.3301887">
+              <caret line="34" column="34" selection-start-line="34" selection-start-column="34" selection-end-line="34" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#872#935#0" expanded="true" />
-                <element signature="e#17838#17839#0" expanded="true" />
-                <element signature="e#17903#17904#0" expanded="true" />
-                <element signature="e#17983#17984#0" expanded="true" />
-                <element signature="e#18050#18051#0" expanded="true" />
-                <element signature="e#19539#19540#0" expanded="true" />
-                <element signature="e#19604#19605#0" expanded="true" />
-                <element signature="e#19684#19685#0" expanded="true" />
-                <element signature="e#19751#19752#0" expanded="true" />
-                <element signature="e#21246#21247#0" expanded="true" />
-                <element signature="e#21311#21312#0" expanded="true" />
-                <element signature="e#21391#21392#0" expanded="true" />
-                <element signature="e#21458#21459#0" expanded="true" />
-                <element signature="e#22687#22688#0" expanded="true" />
-                <element signature="e#22752#22753#0" expanded="true" />
-                <element signature="e#51401#51488#0" expanded="true" />
+                <element signature="e#2505#2568#0" expanded="true" />
+                <element signature="e#19471#19472#0" expanded="true" />
+                <element signature="e#19536#19537#0" expanded="true" />
+                <element signature="e#19616#19617#0" expanded="true" />
+                <element signature="e#19683#19684#0" expanded="true" />
+                <element signature="e#21172#21173#0" expanded="true" />
+                <element signature="e#21237#21238#0" expanded="true" />
+                <element signature="e#21317#21318#0" expanded="true" />
+                <element signature="e#21384#21385#0" expanded="true" />
+                <element signature="e#22879#22880#0" expanded="true" />
+                <element signature="e#22944#22945#0" expanded="true" />
+                <element signature="e#23024#23025#0" expanded="true" />
+                <element signature="e#23091#23092#0" expanded="true" />
+                <element signature="e#24320#24321#0" expanded="true" />
+                <element signature="e#24385#24386#0" expanded="true" />
+                <element signature="e#53094#53181#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -722,12 +725,12 @@
       <workItem from="1496819188739" duration="1386000" />
       <workItem from="1496820617208" duration="5643000" />
       <workItem from="1496826983852" duration="6433000" />
-      <workItem from="1496882202116" duration="2099000" />
+      <workItem from="1496882202116" duration="3323000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15561000" />
+    <option name="totallyTimeSpent" value="16785000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -815,7 +818,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="210" column="8" selection-start-line="210" selection-start-column="8" selection-end-line="210" selection-end-column="8" />
-          <folding />
+          <folding>
+            <element signature="e#2920#2921#0" expanded="true" />
+            <element signature="e#2958#2959#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -892,7 +898,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="98" column="17" selection-start-line="98" selection-start-column="17" selection-end-line="98" selection-end-column="17" />
-          <folding />
+          <folding>
+            <element signature="e#2920#2921#0" expanded="true" />
+            <element signature="e#2958#2959#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -969,7 +978,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
+          <folding>
+            <element signature="e#2920#2921#0" expanded="true" />
+            <element signature="e#2958#2959#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1103,26 +1115,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Components/tomasulo/Component.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="110" column="35" selection-start-line="110" selection-start-column="35" selection-end-line="110" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CPU/tomasulo/Reservation.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CPU/tomasulo/CPU.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="67" column="17" selection-start-line="67" selection-start-column="17" selection-end-line="67" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -1167,28 +1163,47 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/CPU/tomasulo/CPU.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="132" column="16" selection-start-line="132" selection-start-column="16" selection-end-line="132" selection-end-column="16" />
+          <folding>
+            <element signature="e#2920#2921#0" expanded="true" />
+            <element signature="e#2958#2959#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Components/tomasulo/Component.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="110" column="35" selection-start-line="110" selection-start-column="35" selection-end-line="110" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/tomasulo/MainUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="23.066038">
-          <caret line="846" column="20" selection-start-line="846" selection-start-column="20" selection-end-line="846" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.3301887">
+          <caret line="34" column="34" selection-start-line="34" selection-start-column="34" selection-end-line="34" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#872#935#0" expanded="true" />
-            <element signature="e#17838#17839#0" expanded="true" />
-            <element signature="e#17903#17904#0" expanded="true" />
-            <element signature="e#17983#17984#0" expanded="true" />
-            <element signature="e#18050#18051#0" expanded="true" />
-            <element signature="e#19539#19540#0" expanded="true" />
-            <element signature="e#19604#19605#0" expanded="true" />
-            <element signature="e#19684#19685#0" expanded="true" />
-            <element signature="e#19751#19752#0" expanded="true" />
-            <element signature="e#21246#21247#0" expanded="true" />
-            <element signature="e#21311#21312#0" expanded="true" />
-            <element signature="e#21391#21392#0" expanded="true" />
-            <element signature="e#21458#21459#0" expanded="true" />
-            <element signature="e#22687#22688#0" expanded="true" />
-            <element signature="e#22752#22753#0" expanded="true" />
-            <element signature="e#51401#51488#0" expanded="true" />
+            <element signature="e#2505#2568#0" expanded="true" />
+            <element signature="e#19471#19472#0" expanded="true" />
+            <element signature="e#19536#19537#0" expanded="true" />
+            <element signature="e#19616#19617#0" expanded="true" />
+            <element signature="e#19683#19684#0" expanded="true" />
+            <element signature="e#21172#21173#0" expanded="true" />
+            <element signature="e#21237#21238#0" expanded="true" />
+            <element signature="e#21317#21318#0" expanded="true" />
+            <element signature="e#21384#21385#0" expanded="true" />
+            <element signature="e#22879#22880#0" expanded="true" />
+            <element signature="e#22944#22945#0" expanded="true" />
+            <element signature="e#23024#23025#0" expanded="true" />
+            <element signature="e#23091#23092#0" expanded="true" />
+            <element signature="e#24320#24321#0" expanded="true" />
+            <element signature="e#24385#24386#0" expanded="true" />
+            <element signature="e#53094#53181#0" expanded="true" />
           </folding>
         </state>
       </provider>
